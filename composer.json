@@ -1,0 +1,27 @@
+{
+    "name": "yurtesen/geonames",
+    "description": "Geonames importer and models for Eloquent ORM",
+    "license": "GNUv3",
+    "authors": [
+        {
+            "name": "Evren Yurtesen",
+            "email": "eyurtese@abo.fi"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "ext-zip": "*",
+        "illuminate/config": ">=5.1.0",
+        "illuminate/console": ">=5.1.0",
+	"illuminate/database": ">=5.1.0",
+    },
+    "autoload": {
+        "classmap": [
+            "src/Models"
+        ],
+    	"psr-4": {
+    		"Yurtesen\\Geonames\\": "src/"
+    }
+  }
+  "minimum-stability": "dev"
+}
