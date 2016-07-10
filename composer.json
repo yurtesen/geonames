@@ -13,7 +13,7 @@
         "ext-zip": "*",
         "illuminate/config": ">=5.1.0",
         "illuminate/console": ">=5.1.0",
-	"illuminate/database": ">=5.1.0",
+	"illuminate/database": ">=5.1.0"
     },
     "autoload": {
         "classmap": [
@@ -23,5 +23,4 @@
     		"Yurtesen\\Geonames\\": "src/"
     }
   }
-  "minimum-stability": "dev"
 }
