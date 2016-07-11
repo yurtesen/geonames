@@ -9,11 +9,20 @@
         }
     ],
     "minimum-stability": "stable",
+    "keywords": [
+        "geonames",
+        "eloquent",
+        "laravel",
+	"country",
+	"city",
+	"timezone"
+	"location"
+    ],
     "require": {
         "ext-zip": "*",
-        "illuminate/config": ">=5.1.0",
-        "illuminate/console": ">=5.1.0",
-	"illuminate/database": ">=5.1.0"
+        "illuminate/config": ">=5.2.0",
+        "illuminate/console": ">=5.2.0",
+	"illuminate/database": ">=5.2.0"
     },
     "autoload": {
         "classmap": [
