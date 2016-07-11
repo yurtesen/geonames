@@ -57,5 +57,12 @@ class Install extends Command
                     'migrations'
                 ]
             ]);
+        $this->call('vendor:publish',
+            [
+                '--provider' => 'Yurtesen\Geonames\GeonamesServiceProvider',
+                '--tag' => [
+                    'config'
+                ]
+            ]);
     }
 }

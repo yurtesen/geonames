@@ -57,7 +57,7 @@ return array(
 //        'geonames_iso_language_codes',
 //        'geonames_admin1_codes',
 //        'geonames_admin2_codes',
-//        'geonames_alternate_names',
+        'geonames_alternate_names',
     )
 
 );
