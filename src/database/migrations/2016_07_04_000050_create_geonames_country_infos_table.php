@@ -1,5 +1,20 @@
 <?php
 /**
+ *     This is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/**
  * Created by PhpStorm.
  * User: Evren Yurtesen
  * Date: 04-Jul-16
@@ -44,6 +59,11 @@ class CreateGeonamesCountryInfosTable extends Migration
             $table->char('equivalent_fips_code',2)->nullable();
         });
         //DB::statement('ALTER TABLE geonames_country_infos CHANGE iso_numeric iso_numeric SMALLINT(3) UNSIGNED ZEROFILL NOT NULL');
+
+        // Now can add the fforeign key constraint to timezones table also
+        Schema::table('geonames_timezones', function (Blueprint $table) {
+            $table->foreign('country_code')->references('iso')->on('geonames_country_infos')->onUpdate('cascade')->onDelete('cascade');
+        });
     }
 
     /**
@@ -53,6 +73,6 @@ class CreateGeonamesCountryInfosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('geonames_alternate_names');
+        Schema::drop('geonames_country_infos');
     }
 }
