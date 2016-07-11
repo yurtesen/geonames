@@ -64,6 +64,25 @@ class GeonamesAdmin2Code extends Model
      * @var bool
      */
     public $timestamps = false;
-    
+
+    /**
+     * One-to-One relation with GeonamesGeonames
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function geoname()
+    {
+        return $this->hasOne(GeonamesGeoname::class, 'geoname_id', 'geoname_id');
+    }
+
+    /**
+     * One-to-Many relation with GeonamesGeonames
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function hierarchies()
+    {
+        return $this->hasMany(GeonamesHierarchy::class, 'parent_id', 'geoname_id');
+    }
 
 }
