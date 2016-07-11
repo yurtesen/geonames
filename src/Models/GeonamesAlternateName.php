@@ -69,7 +69,7 @@ class GeonamesAlternateName extends Model {
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function geonamesGeoname() {
+    public function geoname() {
         return $this->belongsTo(GeonamesGeoname::class,'geoname_id','geoname_id');
     }
 
