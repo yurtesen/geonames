@@ -18,7 +18,11 @@ Please include the following require in your composer.json :
 
 or install using command line :
 
-	composer require yurtesen/geonames
+	composer require yurtesen/geonames:dev-master
+
+after installation, you will need to add the service provider in your config\app.php to 'providers' array
+
+	Yurtesen\Geonames\GeonamesServiceProvider::class,
 
 ## Artisan Commands
 
