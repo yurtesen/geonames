@@ -15,12 +15,10 @@
  */
 
 /**
- * Created by PhpStorm.
  * User: Evren Yurtesen
  * Date: 06-Jul-16
  * Time: 11:30 AM
  */
-
 
 namespace Yurtesen\Geonames\Models;
 

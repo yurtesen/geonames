@@ -15,7 +15,6 @@
  */
 
 /**
- * Created by PhpStorm.
  * User: Evren Yurtesen
  * Date: 04-Jul-16
  * Time: 5:14 PM
@@ -35,8 +34,8 @@ class CreateGeonamesGeonamesTable extends Migration
     {
         Schema::create('geonames_geonames', function (Blueprint $table) {
             $table->integer('geoname_id')->primary()->unsigned();
-            $table->string('name', 200);
-            $table->string('ascii_name', 200)->nullable();
+            $table->string('name', 200)->index();
+            $table->string('ascii_name', 200)->index()->nullable();
             $table->string('alternate_names', 10000)->nullable();
             $table->decimal('latitude', 7, 5)->index();
             $table->decimal('longitude', 8, 5)->index();

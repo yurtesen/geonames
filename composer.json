@@ -1,35 +1,35 @@
 {
-    "name": "yurtesen/geonames",
-    "description": "Geonames importer and models for Eloquent ORM",
-    "license": "GPL-3.0",
-    "authors": [
-        {
-            "name": "Evren Yurtesen",
-            "email": "eyurtese@abo.fi"
-        }
+  "name": "yurtesen/geonames",
+  "description": "Geonames importer and models for Eloquent ORM",
+  "license": "GPL-3.0",
+  "authors": [
+    {
+      "name": "Evren Yurtesen",
+      "email": "eyurtese@abo.fi"
+    }
+  ],
+  "minimum-stability": "stable",
+  "keywords": [
+    "geonames",
+    "eloquent",
+    "laravel",
+    "country",
+    "city",
+    "timezone",
+    "location"
+  ],
+  "require": {
+    "ext-zip": "*",
+    "illuminate/config": "^5.2.0",
+    "illuminate/console": "^5.2.0",
+    "illuminate/database": "^5.2.0"
+  },
+  "autoload": {
+    "classmap": [
+      "src/Models"
     ],
-    "minimum-stability": "stable",
-    "keywords": [
-        "geonames",
-        "eloquent",
-        "laravel",
-	"country",
-	"city",
-	"timezone",
-	"location"
-    ],
-    "require": {
-        "ext-zip": "*",
-        "illuminate/config": "^5.2.0",
-        "illuminate/console": "^5.2.0",
-	"illuminate/database": "^5.2.0"
-    },
-    "autoload": {
-        "classmap": [
-            "src/Models"
-        ],
-    	"psr-4": {
-    		"Yurtesen\\Geonames\\": "src/"
+    "psr-4": {
+      "Yurtesen\\Geonames\\": "src/"
     }
   }
 }

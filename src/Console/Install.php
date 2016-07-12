@@ -15,35 +15,32 @@
  */
 
 /**
- * Created by PhpStorm.
  * User: Evren Yurtesen
  * Date: 05-Jul-16
  * Time: 3:26 PM
  */
 
-namespace Yurtesen\Geonames\Commands;
+namespace Yurtesen\Geonames\Console;
 
 use Illuminate\Console\Command;
 
-class Download extends Command
+class Install extends Command
 {
-    use CommandTrait;
-
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'geonames:download 
-                            {--update : Updates the downloaded files to latest versions}
-                            ';
+    protected $signature = 'geonames:install';
 
     /**
      * The console command description.
      *
+     * 
      * @var string
      */
-    protected $description = 'Download geonames database txt/zip files';
+    protected $description = 'Publish the migrations';
+
 
     /**
      * Execute the console command.
@@ -52,7 +49,19 @@ class Download extends Command
      */
     public function handle()
     {
-        $update = $this->input->getOption('update');
-        $this->downloadAllFiles($update);
+        $this->call('vendor:publish',
+            [
+                '--provider' => 'Yurtesen\Geonames\GeonamesServiceProvider',
+                '--tag' => [
+                    'migrations'
+                ]
+            ]);
+        $this->call('vendor:publish',
+            [
+                '--provider' => 'Yurtesen\Geonames\GeonamesServiceProvider',
+                '--tag' => [
+                    'config'
+                ]
+            ]);
     }
 }

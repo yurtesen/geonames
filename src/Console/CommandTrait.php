@@ -16,13 +16,12 @@
 
 
 /**
- * Created by PhpStorm.
  * User: Evren Yurtesen
  * Date: 09-Jul-16
  * Time: 1:16 AM
  */
 
-namespace Yurtesen\Geonames\Commands;
+namespace Yurtesen\Geonames\Console;
 
 
 use Closure;

@@ -15,7 +15,6 @@
  */
 
 /**
- * Created by PhpStorm.
  * User: Evren Yurtesen
  * Date: 04-Jul-16
  * Time: 5:14 PM

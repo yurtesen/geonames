@@ -15,7 +15,6 @@
  */
 
 /**
- * Created by PhpStorm.
  * User: Evren Yurtesen
  * Date: 04-Jul-16
  * Time: 2:16 PM
@@ -32,10 +31,10 @@ class GeonamesServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $commands = [
-        'Yurtesen\Geonames\Commands\Download',
-        'Yurtesen\Geonames\Commands\Install',
-        'Yurtesen\Geonames\Commands\Seed',
+    protected $serviceCommands = [
+        'Yurtesen\Geonames\Console\Download',
+        'Yurtesen\Geonames\Console\Install',
+        'Yurtesen\Geonames\Console\Seed',
     ];
 
     /**
@@ -53,11 +52,11 @@ class GeonamesServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/database/migrations' => database_path('migrations')
+            __DIR__ . '/database/migrations' => database_path('migrations')
         ], 'migrations');
 
         $this->publishes([
-            __DIR__.'/config/geonames.php' => config_path('geonames.php')
+            __DIR__ . '/config/geonames.php' => config_path('geonames.php')
         ], 'config');
 
         $this->mergeConfigFrom(realpath(__DIR__ . '/config/geonames.php'), 'geonames');
@@ -71,7 +70,17 @@ class GeonamesServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->commands($this->commands);
+        $this->commands($this->serviceCommands);
+    }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return $this->serviceCommands;
     }
 
 }

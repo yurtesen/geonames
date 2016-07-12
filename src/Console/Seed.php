@@ -15,13 +15,12 @@
  */
 
 /**
- * Created by PhpStorm.
  * User: Evren Yurtesen
  * Date: 05-Jul-16
  * Time: 3:26 PM
  */
 
-namespace Yurtesen\Geonames\Commands;
+namespace Yurtesen\Geonames\Console;
 
 use RuntimeException;
 use Schema;
