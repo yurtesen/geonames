@@ -83,3 +83,20 @@ GeoNamess file names and corresponding table names created in your database.
 |admin1CodesASCII.txt |geonames_admin1_codes    |
 |admin2Codes.txt      |geonames_admin2_codes    |
 |featureCodes_en.txt  |geonames_feature_codes   |
+
+## Indices a.k.a. Indexes ( !!! READ THIS !!! )
+The tables only have basic indices. Especially the 'geonames_geonames' table probably need extra indices for performance. For example for searching cities in the table with 'ascii_name' of the city, the best way to index it is to use a composite index.  For exampe:
+
+ 	ALTER TABLE geonames_geonames ADD INDEX (ascii_name,feature_code);
+ 	
+ Then do a search with 'P' as the 'feature_code' (P: city, village,...)
+ 
+ 	SELECT * FROM geonames_geonames WHERE ascii_name='Turku' and feature_class='P';
+ 	
+ In my development system (5400RPM HDD, 2GB RAM, 2 Cores running in virtual machine), **WITHOUT** index, this query takes about **2 min 30 sec** to return a single row. Ironically the operation of adding the index with the command above takes about **3 min** to complete.
+ 
+ Once the index is added, **WITH** index it takes **0.02 sec** to return the same row. (query cache was cleared)
+ 
+ Remember that composite indices help only if you build your query with the same element order that the index is created. For example, the index given as example above will speed up **WHERE ascii_name='Turku'** but it **WON'T** speed up **WHERE feature_class='p'**. 
+ 
+ You can find much more information at the MySQL documentation page [Multiple-Column Indexes](http://dev.mysql.com/doc/refman/5.7/en/multiple-column-indexes.html)
