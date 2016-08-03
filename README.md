@@ -57,17 +57,17 @@ The configuration has few options so far.
 ## Provided Eloquent Models
 Relations currently need some work still and subject to change.
 
-| Name                | Key       |Relations              |
-|---------------------|-----------|-----------------------|
-|GeonamesGeoname      |geoname_id |alternateName, timeZone|
-|GeonamesAlternateName|geoname_id |geoname                |
-|GeonamesCountryInfo  |iso        |timezone,continent     |
-|GeonamesFeatureCode  |code       |                       |
-|GeonamesLanguageCode |iso_639_3  |                       |
-|GeonamesTimezone     |timezone_id|                       |
-|GeonamesHierarchy    |parent_id  |                       |
-|GeonamesAdmin1Code   |geoname_id |geoname,hierarchies    |
-|GeonamesAdmin2Code   |geoname_id |geoname,hierarchies    |
+| Name                | Key       |Relations              | Scopes     |
+|---------------------|-----------|-----------------------|------------|
+|GeonamesGeoname      |geoname_id |alternateName, timeZone|admin1,city |
+|GeonamesAlternateName|geoname_id |geoname                |            |
+|GeonamesCountryInfo  |iso        |timezone,continent     |            |
+|GeonamesFeatureCode  |code       |                       |            |
+|GeonamesLanguageCode |iso_639_3  |                       |            |
+|GeonamesTimezone     |timezone_id|                       |            |
+|GeonamesHierarchy    |parent_id  |                       |            |
+|GeonamesAdmin1Code   |geoname_id |geoname,hierarchies    |            |
+|GeonamesAdmin2Code   |geoname_id |geoname,hierarchies    |            |
 
 ## Tables
 GeoNamess file names and corresponding table names created in your database.
