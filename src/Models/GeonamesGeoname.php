@@ -144,19 +144,31 @@ class GeonamesGeoname extends Model
     }
 
 
+    /**
+     * Return admin1 information in result
+     * This is very ugly, any suggestions are welcome
+     *
+     * @return \Illuminate\Database\Query\Builder
+     */
     public function scopeAdmin1($query)
     {
         /* @var $query Builder */
-        $query = $query->leftJoin('geonames_admin1_codes',function($join) {
+        $query = $query->leftJoin('geonames_admin1_codes as admin1', function ($join) {
             $join->on(
-                DB::raw('geonames_admin1_codes.code = CONCAT_WS(\'.\','.
-                        'geonames_geonames.country_code,'.
-                        'geonames_geonames.admin1_code)'),
+                DB::raw('admin1.code = CONCAT_WS(\'.\',' .
+                    'geonames_geonames.country_code,' .
+                    'geonames_geonames.admin1_code)'),
                 DB::raw(''),
                 DB::raw('')
 
             );
-        });
+        })->select(
+            'geonames_geonames.*',
+            'admin1.code as admin1_code',
+            'admin1.name as admin1_name',
+            'admin1.name_ascii as admin1_name_ascii',
+            'admin1.geoname_id as admin1_geoname_id'
+        );
         return $query;
     }
 
@@ -172,14 +184,14 @@ class GeonamesGeoname extends Model
      * @param Integer $limit
      * @return \Illuminate\Database\Query\Builder
      */
-    public function scopeCity($query, $name, $featureCodes=null, $limit=null)
+    public function scopeCity($query, $name, $featureCodes = null, $limit = null)
     {
-        if(!isset($featureCodes)) $featureCodes=['PPLC','PPLA','PPLA2'];
-        $queryLimit='';
-        if(isset($limit) && is_numeric($limit)) $queryLimit = 'LIMIT '.$limit;
+        if (!isset($featureCodes)) $featureCodes = ['PPLC', 'PPLA', 'PPLA2'];
+        $queryLimit = '';
+        if (isset($limit) && is_numeric($limit)) $queryLimit = 'LIMIT ' . $limit;
         return $query->where('geonames_geonames.name', 'LIKE', $name)
-                              ->where('feature_class','P')
-                              ->whereIn('feature_code',$featureCodes);
+            ->where('feature_class', 'P')
+            ->whereIn('feature_code', $featureCodes);
     }
 
 
