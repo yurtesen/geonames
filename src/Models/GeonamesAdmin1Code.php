@@ -24,6 +24,21 @@ namespace Yurtesen\Geonames\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Yurtesen\Geonames\Models\GeonamesAdmin1Code
+ *
+ * @property string $code
+ * @property string $name
+ * @property string $name_ascii
+ * @property integer $geoname_id
+ * @property-read \Yurtesen\Geonames\Models\GeonamesGeoname $geoname
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Yurtesen\Geonames\Models\GeonamesHierarchy[] $hierarchies
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesAdmin1Code whereCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesAdmin1Code whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesAdmin1Code whereNameAscii($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesAdmin1Code whereGeonameId($value)
+ * @mixin \Eloquent
+ */
 class GeonamesAdmin1Code extends Model
 {
     /**

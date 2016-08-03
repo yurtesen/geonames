@@ -24,6 +24,17 @@ namespace Yurtesen\Geonames\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Yurtesen\Geonames\Models\GeonamesHierarchy
+ *
+ * @property integer $parent_id
+ * @property integer $child_id
+ * @property string $type
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesHierarchy whereParentId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesHierarchy whereChildId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesHierarchy whereType($value)
+ * @mixin \Eloquent
+ */
 class GeonamesHierarchy extends Model
 {
     /**

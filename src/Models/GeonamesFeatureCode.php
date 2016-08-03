@@ -24,6 +24,17 @@ namespace Yurtesen\Geonames\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Yurtesen\Geonames\Models\GeonamesFeatureCode
+ *
+ * @property string $code
+ * @property string $name
+ * @property string $description
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesFeatureCode whereCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesFeatureCode whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesFeatureCode whereDescription($value)
+ * @mixin \Eloquent
+ */
 class GeonamesFeatureCode extends Model
 {
     /**

@@ -24,6 +24,53 @@ namespace Yurtesen\Geonames\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Yurtesen\Geonames\Models\GeonamesCountryInfo
+ *
+ * @property string $iso
+ * @property string $iso3
+ * @property string $iso_numeric
+ * @property string $fips
+ * @property string $country
+ * @property string $capital
+ * @property integer $area
+ * @property integer $population
+ * @property string $continent_code
+ * @property integer $continent_id
+ * @property string $tld
+ * @property string $currency_code
+ * @property string $currency_name
+ * @property string $phone
+ * @property string $postal_code_format
+ * @property string $postal_code_regex
+ * @property string $languages
+ * @property integer $geoname_id
+ * @property string $neighbors
+ * @property string $equivalent_fips_code
+ * @property-read \Yurtesen\Geonames\Models\GeonamesTimezone $timezone
+ * @property-read \Yurtesen\Geonames\Models\GeonamesGeoname $continent
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesCountryInfo whereIso($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesCountryInfo whereIso3($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesCountryInfo whereIsoNumeric($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesCountryInfo whereFips($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesCountryInfo whereCountry($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesCountryInfo whereCapital($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesCountryInfo whereArea($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesCountryInfo wherePopulation($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesCountryInfo whereContinentCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesCountryInfo whereContinentId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesCountryInfo whereTld($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesCountryInfo whereCurrencyCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesCountryInfo whereCurrencyName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesCountryInfo wherePhone($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesCountryInfo wherePostalCodeFormat($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesCountryInfo wherePostalCodeRegex($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesCountryInfo whereLanguages($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesCountryInfo whereGeonameId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesCountryInfo whereNeighbors($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesCountryInfo whereEquivalentFipsCode($value)
+ * @mixin \Eloquent
+ */
 class GeonamesCountryInfo extends Model
 {
     /**

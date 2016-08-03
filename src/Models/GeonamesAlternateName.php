@@ -24,6 +24,28 @@ namespace Yurtesen\Geonames\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Yurtesen\Geonames\Models\GeonamesAlternateName
+ *
+ * @property integer $alternate_name_id
+ * @property integer $geoname_id
+ * @property string $iso_language
+ * @property string $alternate_name
+ * @property boolean $isPreferredName
+ * @property boolean $isShortName
+ * @property boolean $isColloquial
+ * @property boolean $isHistoric
+ * @property-read \Yurtesen\Geonames\Models\GeonamesGeoname $geoname
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesAlternateName whereAlternateNameId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesAlternateName whereGeonameId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesAlternateName whereIsoLanguage($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesAlternateName whereAlternateName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesAlternateName whereIsPreferredName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesAlternateName whereIsShortName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesAlternateName whereIsColloquial($value)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesAlternateName whereIsHistoric($value)
+ * @mixin \Eloquent
+ */
 class GeonamesAlternateName extends Model {
     /**
      * The attributes that are mass assignable.
