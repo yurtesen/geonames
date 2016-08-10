@@ -35,7 +35,7 @@ class Download extends Command
      */
     protected $signature = 'geonames:download 
                             {--update : Updates the downloaded files to latest versions}
-                            ';
+                           ';
 
     /**
      * The console command description.
