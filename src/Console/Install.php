@@ -36,11 +36,9 @@ class Install extends Command
     /**
      * The console command description.
      *
-     * 
      * @var string
      */
-    protected $description = 'Publish the migrations';
-
+    protected $description = 'Publish the migrations and config';
 
     /**
      * Execute the console command.
@@ -54,7 +52,8 @@ class Install extends Command
                 '--provider' => 'Yurtesen\Geonames\GeonamesServiceProvider',
                 '--tag' => [
                     'migrations'
-                ]
+                ],
+                '--force' => true
             ]);
         $this->call('vendor:publish',
             [

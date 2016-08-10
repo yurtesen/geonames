@@ -42,7 +42,7 @@ class Seed extends Command
                             {--refresh : Truncate tables and re-insert data from scratch} 
                             {--update-files : Update geonames files before inserting data to database}
                             {--table= : Only import the given database table}
-                            ';
+                           ';
 
     /**
      * The console command description.

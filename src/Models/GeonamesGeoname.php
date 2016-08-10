@@ -24,7 +24,6 @@ namespace Yurtesen\Geonames\Models;
 
 use DB;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
 
 /**
  * Yurtesen\Geonames\Models\GeonamesGeoname
@@ -114,6 +113,17 @@ class GeonamesGeoname extends Model
     public $timestamps = false;
 
     /**
+     *  Most useful fields which we want in every result which utilize our scopes
+     *
+     * @var array
+     */
+    private $usefulScopeColumns = [
+        'geonames_geonames.geoname_id',
+        'geonames_geonames.name',
+        'geonames_geonames.country_code'
+    ];
+
+    /**
      * One-to-One relation with GeonamesAlternateNames
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
@@ -146,52 +156,80 @@ class GeonamesGeoname extends Model
 
     /**
      * Return admin1 information in result
-     * This is very ugly, any suggestions are welcome
      *
+     * @param \Illuminate\Database\Query\Builder $query
      * @return \Illuminate\Database\Query\Builder
      */
     public function scopeAdmin1($query)
     {
-        /* @var $query Builder */
-        $query = $query->leftJoin('geonames_admin1_codes as admin1', function ($join) {
-            $join->on(
-                DB::raw('admin1.code = CONCAT_WS(\'.\',' .
-                    'geonames_geonames.country_code,' .
-                    'geonames_geonames.admin1_code)'),
-                DB::raw(''),
-                DB::raw('')
+        $table = 'geonames_geonames';
 
+        if (!isset($query->getQuery()->columns))
+            $query = $query->addSelect($this->usefulScopeColumns);
+
+        $query->leftJoin('test','test','test');
+        $query = $query
+            ->leftJoin('geonames_admin1_codes as admin1', 'admin1.code', '=',
+                DB::raw('CONCAT_WS(\'.\',' .
+                    $table . '.country_code,' .
+                    $table . '.admin1_code)')
+            )
+            ->addSelect(
+                'admin1.geoname_id as admin1_geoname_id',
+                'admin1.name as admin1_name'
             );
-        })->select(
-            'geonames_geonames.*',
-            'admin1.code as admin1_code',
-            'admin1.name as admin1_name',
-            'admin1.name_ascii as admin1_name_ascii',
-            'admin1.geoname_id as admin1_geoname_id'
-        );
+
         return $query;
     }
 
     /**
+     * Return country information in result
+     *
+     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function scopeCountryInfo($query)
+    {
+        $table = 'geonames_geonames';
+
+        if (!isset($query->getQuery()->columns))
+            $query = $query->addSelect($this->usefulScopeColumns);
+
+        $query = $query
+            ->leftJoin('geonames_country_infos as country_info', $table . '.country_code', '=',
+                'country_info.iso'
+            )
+            ->addSelect(
+                'country_info.geoname_id as country_info_geoname_id',
+                'country_info.country as country_info_country'
+            );
+
+        return $query;
+    }
+
+
+    /**
      * Build a query to find major cities. Accepts wildcards eg. 'Helsin%'
+     * It orders by 'population' by default.
      *
-     * Requires Index:
-     * ALTER TABLE geonames_geonames ADD index (name,feature_code,feature_class);
+     * Suggested Index:
+     * ALTER TABLE geonames_geonames ADD index (`feature_code`,`feature_class`,`name`);
      *
+     * @param Builder $query
      * @param String $name
      * @param array $featureCodes List of feature codes to use when returning results
      *                            defaults to ['PPLC','PPLA','PPLA2']
-     * @param Integer $limit
      * @return \Illuminate\Database\Query\Builder
      */
-    public function scopeCity($query, $name, $featureCodes = null, $limit = null)
+    public function scopeCity($query, $name, $featureCodes = null)
     {
+        $table = 'geonames_geonames';
         if (!isset($featureCodes)) $featureCodes = ['PPLC', 'PPLA', 'PPLA2'];
-        $queryLimit = '';
-        if (isset($limit) && is_numeric($limit)) $queryLimit = 'LIMIT ' . $limit;
-        return $query->where('geonames_geonames.name', 'LIKE', $name)
-            ->where('feature_class', 'P')
-            ->whereIn('feature_code', $featureCodes);
+        return $query
+            ->where($table . '.name', 'LIKE', $name)
+            ->where($table . '.feature_class', 'P')
+            ->whereIn($table . '.feature_code', $featureCodes)
+            ->orderBy($table . '.population', 'desc');
     }
 
 
