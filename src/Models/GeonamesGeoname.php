@@ -69,10 +69,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesGeoname whereDem($value)
  * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesGeoname whereTimezoneId($value)
  * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesGeoname whereModifiedAt($value)
- * @mixin \Eloquent
  * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesGeoname admin1()
- * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesGeoname countryInfo()
  * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesGeoname city($name, $featureCodes = null, $limit = null)
+ * @mixin \Eloquent
  */
 class GeonamesGeoname extends Model
 {
@@ -168,6 +167,7 @@ class GeonamesGeoname extends Model
         if (!isset($query->getQuery()->columns))
             $query = $query->addSelect($this->usefulScopeColumns);
 
+        $query->leftJoin('test','test','test');
         $query = $query
             ->leftJoin('geonames_admin1_codes as admin1', 'admin1.code', '=',
                 DB::raw('CONCAT_WS(\'.\',' .
@@ -210,24 +210,26 @@ class GeonamesGeoname extends Model
 
     /**
      * Build a query to find major cities. Accepts wildcards eg. 'Helsin%'
+     * It orders by 'population' by default.
      *
      * Suggested Index:
      * ALTER TABLE geonames_geonames ADD index (`feature_code`,`feature_class`,`name`);
      *
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @param Builder $query
      * @param String $name
      * @param array $featureCodes List of feature codes to use when returning results
      *                            defaults to ['PPLC','PPLA','PPLA2']
      * @return \Illuminate\Database\Query\Builder
      */
-    public function scopeCity($query, $name, $featureCodes = ['PPLC', 'PPLA', 'PPLA2'])
+    public function scopeCity($query, $name, $featureCodes = null)
     {
         $table = 'geonames_geonames';
-        $query = $query
+        if (!isset($featureCodes)) $featureCodes = ['PPLC', 'PPLA', 'PPLA2'];
+        return $query
             ->where($table . '.name', 'LIKE', $name)
             ->where($table . '.feature_class', 'P')
-            ->whereIn($table . '.feature_code', $featureCodes);
-        return $query;
+            ->whereIn($table . '.feature_code', $featureCodes)
+            ->orderBy($table . '.population', 'desc');
     }
 
 

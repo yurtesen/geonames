@@ -37,8 +37,8 @@ class CreateGeonamesGeonamesTable extends Migration
             $table->string('name', 200);
             $table->string('ascii_name', 200)->nullable();
             $table->string('alternate_names', 10000)->nullable();
-            $table->decimal('latitude', 7, 5)->index();
-            $table->decimal('longitude', 8, 5)->index();
+            $table->decimal('latitude', 7, 5);
+            $table->decimal('longitude', 8, 5);
             $table->char('feature_class', 1)->nullable();
             $table->string('feature_code', 10)->nullable();
             $table->char('country_code', 2);
