@@ -1,10 +1,6 @@
 # Laravel / Eloquent Geonames
 
-This package provides Eloquent models and Artisan commands to import/update a local copy of [GeoNames](http://www.geonames.org/) databases.
-
-It aims to support local data + GeoNames API support.
-
-**Notice:** This package is currently in beta status and some structures may change in future. It is not recommended to use in production systems but you are welcome to test it and suggest improvements. The pull requests should abide to good coding standards otherwise they will be rejected.
+This package provides probably the best Eloquent models, most complete SQL schemas and fastest Artisan commands to import/update a local copy of [GeoNames](http://www.geonames.org/) databases.
 
 ## Installation
 
@@ -46,31 +42,33 @@ Seeds the database tables using downloaded files
 		--table=TABLE     Import only the given table    
 
 ## Configuration
-The configuration has few options so far.
 
-| Option     | Default                        | Description                        |
-|------------|--------------------------------|------------------------------------|
-|keepTxt     |true                            |Do NOT delete extracted .txt files  |
-|storagePath |storage_path().'/meta/geonames' |Storage path for ownloaded files    |
-|ignoreTables|array('geonames_alternate_names)|Do NOT import tables in this array()|
+The configuration options:
+
+| Option     | Default                        | Description                             |
+|------------|--------------------------------|-----------------------------------------|
+|keepTxt     |true                            |Do NOT delete extracted .txt files       |
+|storagePath |storage_path().'/meta/geonames' |Storage path for downloaded files        |
+|ignoreTables|array('geonames_alternate_names)|Do NOT import/skip tables in this array()|
 
 ## Provided Eloquent Models
-Relations currently need some work still and subject to change.
 
-| Name                | Key       |Relations              | Scopes     |
-|---------------------|-----------|-----------------------|------------|
-|GeonamesGeoname      |geoname_id |alternateName, timeZone|admin1,city |
-|GeonamesAlternateName|geoname_id |geoname                |            |
-|GeonamesCountryInfo  |iso        |timezone,continent     |            |
-|GeonamesFeatureCode  |code       |                       |            |
-|GeonamesLanguageCode |iso_639_3  |                       |            |
-|GeonamesTimezone     |timezone_id|                       |            |
-|GeonamesHierarchy    |parent_id  |                       |            |
-|GeonamesAdmin1Code   |geoname_id |geoname,hierarchies    |            |
-|GeonamesAdmin2Code   |geoname_id |geoname,hierarchies    |            |
+Please see the *Wiki* pages for implementation details.
+
+| Name                | Key       |Relations                                  | Scopes                 |
+|---------------------|-----------|-------------------------------------------|------------------------|
+|GeonamesGeoname      |geoname_id |alternateName, timeZone,country            |admin1,city,countryInfo |
+|GeonamesAlternateName|geoname_id |geoname                                    |                        |
+|GeonamesCountryInfo  |iso        |timezone,continent                         |                        |
+|GeonamesFeatureCode  |code       |                                           |                        |
+|GeonamesLanguageCode |iso_639_3  |                                           |                        |
+|GeonamesTimezone     |timezone_id|                                           |                        |
+|GeonamesHierarchy    |parent_id  |                                           |                        |
+|GeonamesAdmin1Code   |geoname_id |geoname,hierarchies                        |                        |
+|GeonamesAdmin2Code   |geoname_id |geoname,hierarchies                        |                        |
 
 ## Tables
-GeoNamess file names and corresponding table names created in your database.
+GeoNames file names and corresponding table names created in your database.
 
 |Filename             |Tablename                |
 |---------------------|-------------------------|
