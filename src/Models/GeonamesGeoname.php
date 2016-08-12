@@ -211,8 +211,13 @@ class GeonamesGeoname extends Model
     /**
      * Build a query to find major cities. Accepts wildcards eg. 'Helsin%'
      *
-     * Suggested Index:
-     * ALTER TABLE geonames_geonames ADD index (`feature_code`,`feature_class`,`name`);
+     * Suggested index for search:
+     * ALTER TABLE geonames_geonames ADD INDEX geonames_geonames_feature_name_index
+     *                                                          (`feature_class`,`feature_code`,`name`);
+     * and if you will limit queries by country you should also use:
+     * ALTER TABLE geonames_geonames ADD INDEX geonames_geonames_country_feature_name_index
+     *                                                          (`country_code`,`feature_class`,`feature_code`,`name`);
+     *
      *
      * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
      * @param String $name
@@ -220,7 +225,7 @@ class GeonamesGeoname extends Model
      *                            defaults to ['PPLC','PPLA','PPLA2']
      * @return \Illuminate\Database\Query\Builder
      */
-    public function scopeCity($query, $name = null, $featureCodes = ['PPLC', 'PPLA', 'PPLA2', 'PPLA3'])
+    public function scopeCity($query, $name = null, $featureCodes = ['PPLC', 'PPLA', 'PPLA2', 'PPLA3', 'PPLA4'])
     {
         $table = 'geonames_geonames';
 
