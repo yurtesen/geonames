@@ -225,7 +225,7 @@ class GeonamesGeoname extends Model
      *                            defaults to ['PPLC','PPLA','PPLA2']
      * @return \Illuminate\Database\Query\Builder
      */
-    public function scopeCity($query, $name = null, $featureCodes = ['PPLC', 'PPLA', 'PPLA2', 'PPLA3', 'PPLA4'])
+    public function scopeCity($query, $name = null, $featureCodes = ['PPLC', 'PPLA', 'PPLA2', 'PPLA3'])
     {
         $table = 'geonames_geonames';
 
