@@ -19,37 +19,11 @@ or install using command line :
 after installation, you will need to add the service provider in your config\app.php to 'providers' array
 
 	Yurtesen\Geonames\GeonamesServiceProvider::class,
+	
+	
+## Usage and Configuration
 
-## Artisan Commands
-
-**Install**
-Installs the migrations files to App migrations folder. Remember to execute the migrations afterwards.
-
-	geonames:install
-
-**Download**
-  Downloads the GeoNames database files
-  
-	geonames:download [options]
-		--update          Updates the downloaded files to latest versions
-
-**Seed**
-Seeds the database tables using downloaded files 
-
-	geonames:seed [options]
-		--update-files    Updates the downloaded files to latest versions
-		--refresh         Truncate tables before importing
-		--table=TABLE     Import only the given table    
-
-## Configuration
-
-The configuration options:
-
-| Option     | Default                        | Description                             |
-|------------|--------------------------------|-----------------------------------------|
-|keepTxt     |true                            |Do NOT delete extracted .txt files       |
-|storagePath |storage_path().'/meta/geonames' |Storage path for downloaded files        |
-|ignoreTables|array('geonames_alternate_names)|Do NOT import/skip tables in this array()|
+Please see the [wiki](https://github.com/yurtesen/geonames/wiki) for further information
 
 ## Provided Eloquent Models
 
