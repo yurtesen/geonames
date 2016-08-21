@@ -49,12 +49,12 @@ trait CommandTrait
      */
     protected $continentCodes = array(
         'AF' => 6255146,
-        'AS' => 56255147,
+        'AS' => 6255147,
         'EU' => 6255148,
         'NA' => 6255149,
         'OC' => 6255151,
         'SA' => 6255150,
-        'AN' => 625515,
+        'AN' => 6255152,
     );
 
     /**
@@ -118,7 +118,6 @@ trait CommandTrait
      *
      * @param string $name The config name of the file
      * @param boolean $refresh Set true for truncating table before inserting rows
-     * @return array $column=>$value array
      *
      */
     protected function parseGeonamesText($name, $refresh = false)
@@ -234,11 +233,12 @@ trait CommandTrait
             },
         );
 
+        // This will greatly improve the performance of inserts
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         $tableName = $this->files[$name]['table'];
         if (DB::table($tableName)->count() === 0 || $refresh) {
-            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            $this->line('<info>Database:</info> Truncating table '.$tableName);
             DB::table($tableName)->truncate();
-            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         }
         $buffer = array();
         $fields = $fieldsArray[$name];
@@ -257,6 +257,7 @@ trait CommandTrait
         if (count($buffer) > 0)
             $this->updateOrInsertMultiple($tableName, $buffer);
 
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**
@@ -296,8 +297,6 @@ trait CommandTrait
         if (!$fh) {
             throw new RuntimeException("Can not open file: $path");
         }
-        // This will greatly improve the performance of inserts
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         while (!feof($fh)) {
             $line = fgets($fh);
             // ignore empty lines and comments
@@ -310,7 +309,6 @@ trait CommandTrait
             if (isset($bar) && $steps % ($this->bufferSize * 10) === 0)
                 $bar->advance($this->bufferSize * 10);
         }
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         fclose($fh);
         if (isset($bar)) {
             $bar->finish();
