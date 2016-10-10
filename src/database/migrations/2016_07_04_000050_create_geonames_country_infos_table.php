@@ -59,7 +59,7 @@ class CreateGeonamesCountryInfosTable extends Migration
         });
         //DB::statement('ALTER TABLE geonames_country_infos CHANGE iso_numeric iso_numeric SMALLINT(3) UNSIGNED ZEROFILL NOT NULL');
 
-        // Now can add the fforeign key constraint to timezones table also
+        // Now can add the foreign key constraint to timezones table also
         Schema::table('geonames_timezones', function (Blueprint $table) {
             $table->foreign('country_code')->references('iso')->on('geonames_country_infos')->onUpdate('cascade')->onDelete('cascade');
         });
@@ -72,6 +72,10 @@ class CreateGeonamesCountryInfosTable extends Migration
      */
     public function down()
     {
+        // First drop the foreign constraint from timezones table
+        Schema::table('geonames_timezones', function (Blueprint $table) {
+            $table->dropForeign('geonames_timezones_country_code_foreign');
+        });
         Schema::drop('geonames_country_infos');
     }
 }
