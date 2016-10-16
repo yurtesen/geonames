@@ -57,4 +57,4 @@ GeoNames file names and corresponding table names created in your database.
 |featureCodes_en.txt  |geonames_feature_codes   |
 
 ## If You Need Help
-Please check the wiki for more information about how to utilize the package efficiently and usage examples. If something does not work or if you have a suggestion, please do not hesitate to use the issue tracker.
+Please check the [wiki](https://github.com/yurtesen/geonames/wiki) for more information about how to utilize the package efficiently and usage examples. If something does not work or if you have a suggestion, please do not hesitate to use the issue tracker.
