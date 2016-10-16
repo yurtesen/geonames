@@ -145,7 +145,7 @@ class GeonamesGeoname extends Model
     }
 
     /**
-     * One-to-Onex`x     relation with GeonamesCountryInfos
+     * One-to-One relation with GeonamesCountryInfos
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
