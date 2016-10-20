@@ -224,7 +224,7 @@ class GeonamesGeoname extends Model
      * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
      * @param String $name
      * @param array $featureCodes List of feature codes to use when returning results
-     *                            defaults to ['PPLC','PPLA','PPLA2']
+     *                            defaults to ['PPLC','PPLA','PPLA2', 'PPLA3']
      * @return \Illuminate\Database\Query\Builder
      */
     public function scopeCity($query, $name = null, $featureCodes = ['PPLC', 'PPLA', 'PPLA2', 'PPLA3'])
@@ -242,7 +242,7 @@ class GeonamesGeoname extends Model
      * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
      * @param String $name
      * @param array $featureCodes List of feature codes to use when returning results
-     *                            defaults to ['PPLC','PPLA','PPLA2']
+     *                            defaults to ['PCLI']
      * @return \Illuminate\Database\Query\Builder
      */
     public function scopeCountry($query, $name = null, $featureCodes = ['PCLI'])
