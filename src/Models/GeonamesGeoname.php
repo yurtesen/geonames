@@ -131,7 +131,7 @@ class GeonamesGeoname extends Model
      */
     public function alternateName()
     {
-        return $this->hasOne(GeonamesAlternateName::class, 'geoname_id', 'geoname_id');
+        return $this->hasMany(GeonamesAlternateName::class, 'geoname_id', 'geoname_id');
     }
 
     /**
