@@ -33,8 +33,8 @@ class CreateGeonamesAlternateNamesTable extends Migration
     public function up()
     {
         Schema::create('geonames_alternate_names', function (Blueprint $table) {
-            $table->integer('alternate_name_id')->unique()->unsigned();
-            $table->integer('geoname_id')->primary()->unsigned();
+            $table->integer('alternate_name_id')->primary()->unsigned();
+            $table->integer('geoname_id')->index()->unsigned();
             $table->foreign('geoname_id')->references('geoname_id')->on('geonames_geonames')->onUpdate('cascade')->onDelete('cascade');
             $table->string('iso_language', 7)->nullable();
             $table->string('alternate_name', 400)->nullable();

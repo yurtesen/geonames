@@ -49,7 +49,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $modified_at
  * @property-read \Yurtesen\Geonames\Models\GeonamesAlternateName $alternateName
  * @property-read \Yurtesen\Geonames\Models\GeonamesTimezone $timeZone
- * @property-read \Yurtesen\Geonames\Models\GeonamesCountryInfo $country
+ * @property-read \Yurtesen\Geonames\Models\GeonamesCountryInfo $countryInfo
  * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesGeoname whereGeonameId($value)
  * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesGeoname whereName($value)
  * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesGeoname whereAsciiName($value)
@@ -69,10 +69,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesGeoname whereDem($value)
  * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesGeoname whereTimezoneId($value)
  * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesGeoname whereModifiedAt($value)
- * @mixin \Eloquent
  * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesGeoname admin1()
- * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesGeoname countryInfo()
- * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesGeoname city($name, $featureCodes = null, $limit = null)
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesGeoname addCountryInfo()
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesGeoname city($name = null, $featureCodes = array())
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesGeoname country($name = null, $featureCodes = array())
+ * @method static \Illuminate\Database\Query\Builder|\Yurtesen\Geonames\Models\GeonamesGeoname searchByFeature($name = null, $feature_class = null, $featureCodes = null)
+ * @mixin \Eloquent
  */
 class GeonamesGeoname extends Model
 {
@@ -135,7 +137,7 @@ class GeonamesGeoname extends Model
     }
 
     /**
-     * One-to-One relation with GeonamesAlternateNames
+     * One-to-One relation with GeonamesTimezones
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -145,11 +147,11 @@ class GeonamesGeoname extends Model
     }
 
     /**
-     * One-to-Onex`x     relation with GeonamesCountryInfos
+     * One-to-One relation with GeonamesCountryInfos
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function country()
+    public function countryInfo()
     {
         return $this->hasOne(GeonamesCountryInfo::class, 'iso', 'country_code');
     }
@@ -188,7 +190,7 @@ class GeonamesGeoname extends Model
      * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Query\Builder
      */
-    public function scopeCountryInfo($query)
+    public function scopeAddCountryInfo($query)
     {
         $table = 'geonames_geonames';
 
@@ -222,10 +224,43 @@ class GeonamesGeoname extends Model
      * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
      * @param String $name
      * @param array $featureCodes List of feature codes to use when returning results
-     *                            defaults to ['PPLC','PPLA','PPLA2']
+     *                            defaults to ['PPLC','PPLA','PPLA2', 'PPLA3']
      * @return \Illuminate\Database\Query\Builder
      */
     public function scopeCity($query, $name = null, $featureCodes = ['PPLC', 'PPLA', 'PPLA2', 'PPLA3'])
+    {
+        return $this->scopeSearchByFeature($query,$name,'P',$featureCodes);
+    }
+
+    /**
+     * Build a query to find major ccountries. Accepts wildcards eg. '%Finland%'
+     *
+     * Suggested index for search:
+     * ALTER TABLE geonames_geonames ADD INDEX geonames_geonames_feature_name_index
+     *                                                          (`feature_class`,`feature_code`,`name`);
+     *
+     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @param String $name
+     * @param array $featureCodes List of feature codes to use when returning results
+     *                            defaults to ['PCLI']
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function scopeCountry($query, $name = null, $featureCodes = ['PCLI'])
+    {
+        return $this->scopeSearchByFeature($query,$name,'A',$featureCodes);
+    }
+
+
+    /**
+     * Generic query used by scopes, but you can call it with custom feataure codes.
+     *
+     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @param String $name
+     * @param String $feature_class The 1 character feature class
+     * @param array $featureCodes List of feature codes to use when returning results
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function scopeSearchByFeature($query, $name = null, $feature_class=null, $featureCodes = null)
     {
         $table = 'geonames_geonames';
 
@@ -236,7 +271,7 @@ class GeonamesGeoname extends Model
             $query = $query->where($table . '.name', 'LIKE', $name);
 
         $query = $query
-            ->where($table . '.feature_class', 'P')
+            ->where($table . '.feature_class', $feature_class)
             ->whereIn($table . '.feature_code', $featureCodes);
 
         return $query;
