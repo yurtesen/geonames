@@ -39,6 +39,7 @@ class Seed extends Command
      * @var string
      */
     protected $signature = 'geonames:seed 
+                            {--country=all : Download just one country}
                             {--refresh : Truncate tables and re-insert data from scratch} 
                             {--update-files : Update geonames files before inserting data to database}
                             {--table= : Only import the given database table}
@@ -62,8 +63,20 @@ class Seed extends Command
         $updateFiles = $this->input->getOption('update-files');
         $refresh = $this->input->getOption('refresh');
         $table = $this->input->getOption('table');
+        $country = $this->input->getOption('country');
 
         if (isset($table)) {
+            if ($table === 'geonames_geonames') {
+                if ($country !== 'all') {
+                    unset($this->files['allCountries']);
+                    $this->files[$country] = [
+                        'url' => "http://download.geonames.org/export/dump/{$country}.zip",
+                        'filename' => $country,
+                        'table' => 'geonames_geonames'
+                    ];
+                }
+            }
+
             foreach ($this->files as $name => $file) {
                 if ($file['table'] == $table) {
                     $this->downloadFile($name, $updateFiles);
@@ -74,7 +87,7 @@ class Seed extends Command
             $this->line('<error>Table Not Found: </error> Table '.$table.'not found in configuration');
             return;
         } else {
-            $this->downloadAllFiles($updateFiles);
+            $this->downloadAllFiles($country, $updateFiles);
             // Check if we have all the tables
             foreach ($this->getFilesArray() as $name => $file) {
                 if (Schema::hasTable($file['table'])) {

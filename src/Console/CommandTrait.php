@@ -236,12 +236,16 @@ trait CommandTrait
         // This will greatly improve the performance of inserts
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         $tableName = $this->files[$name]['table'];
+
         if (DB::table($tableName)->count() === 0 || $refresh) {
             $this->line('<info>Database:</info> Truncating table '.$tableName);
             DB::table($tableName)->truncate();
+        } else if ($tableName !== 'geonames_geonames') {
+            return $this->line('<info>Database:</info> Table '.$tableName.' Already Seeded');
         }
+
         $buffer = array();
-        $fields = $fieldsArray[$name];
+        $fields = isset($fieldsArray[$name]) ? $fieldsArray[$name] : $fieldsArray['allCountries'];
         $this->parseFile($name, function ($row) use (&$buffer, $fields, $tableName) {
             $insert = $fields($row);
             if (isset($insert) && is_array($insert)) {
@@ -415,12 +419,23 @@ trait CommandTrait
     /**
      * Download a file if it does not exist
      *
+     * @param string $country
      * @param Boolean $update Update files
      *
      */
-    protected function downloadAllFiles($update = false)
+    protected function downloadAllFiles($country='all', $update = false)
     {
+        if ($country !== 'all') {
+            unset($this->files['allCountries']);
+            $this->files[$country] = [
+                'url' => "http://download.geonames.org/export/dump/{$country}.zip",
+                'filename' => $country,
+                'table' => 'geonames_geonames'
+            ];
+        }
+
         $files = array_keys($this->getFilesArray());
+
         foreach ($files as $name) {
             $this->downloadFile($name, $update);
         }
