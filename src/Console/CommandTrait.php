@@ -111,7 +111,6 @@ trait CommandTrait
         )
     );
 
-
     /**
      * Parses the array created from different geonames file lines
      * and converts into key=>value type array
@@ -237,11 +236,15 @@ trait CommandTrait
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         $tableName = $this->files[$name]['table'];
         if (DB::table($tableName)->count() === 0 || $refresh) {
-            $this->line('<info>Database:</info> Truncating table '.$tableName);
+            $this->line('<info>Database:</info> Truncating table ' . $tableName);
             DB::table($tableName)->truncate();
         }
         $buffer = array();
-        $fields = $fieldsArray[$name];
+        // If it is a custom country code, use allCountries
+        if (in_array($name, config('geonames.countries')))
+            $fields = $fieldsArray['allCountries'];
+        else
+            $fields = $fieldsArray[$name];
         $this->parseFile($name, function ($row) use (&$buffer, $fields, $tableName) {
             $insert = $fields($row);
             if (isset($insert) && is_array($insert)) {
@@ -552,12 +555,18 @@ trait CommandTrait
 
     /**
      * Returns files array after removing entries in
-     * ignoreTables config option
+     * ignoreTables config option and adding custom countries from
+     * countries config option if necessary
      *
      * @return array
      */
     protected function getFilesArray()
     {
+        static $firstRun = true;
+        if ($firstRun) {
+            $this->updateFilesList();
+            $firstRun = false;
+        }
         $data = $this->files;
         foreach ($data as $key => $value) {
             if (in_array($value['table'], config('geonames.ignoreTables'))) {
@@ -568,4 +577,20 @@ trait CommandTrait
     }
 
 
+    protected function updateFilesList()
+    {
+        // Get ISO codes for countries to import if there are any
+        $countries = config('geonames.countries');
+        if (!empty($countries)) {
+
+            unset($this->files['allCountries']);
+            foreach ($countries as $country) {
+                $this->files[$country] = [
+                    'url' => 'http://download.geonames.org/export/dump/' . $country . '.zip',
+                    'filename' => $country,
+                    'table' => 'geonames_geonames'
+                ];
+            }
+        }
+    }
 }

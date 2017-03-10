@@ -72,6 +72,21 @@ return array(
 //        'geonames_admin1_codes',
 //        'geonames_admin2_codes',
         'geonames_alternate_names',
-    )
+    ),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Country list for seeding
+    |--------------------------------------------------------------------------
+    | The countries to seed into geonames_geonames table.
+    | Use the ISO code of the country.
+    | If the list is empty, allCountries file is seeded
+    |
+    | Notice: The file XX.zip must exist in http://download.geonames.org/export/dump/
+    */
+    'countries' => array(
+//        'FI',
+//        'SE',
+//        'NO'
+    ),
 );
