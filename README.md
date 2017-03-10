@@ -1,4 +1,4 @@
-# Laravel / Eloquent Geonames
+# Symphony / Laravel / Eloquent Geonames
 
 This package provides probably the best Eloquent models, most complete SQL schemas and fastest Artisan commands to import/update a local copy of [GeoNames](http://www.geonames.org/) databases.
 
