@@ -112,6 +112,13 @@ trait CommandTrait
     );
 
     /**
+     * List of tables which are already truncated for avoiding double truncation
+     * in case if we are importing multiple files into same table.
+     * @var array
+     */
+    protected $truncatedTables = array();
+
+    /**
      * Parses the array created from different geonames file lines
      * and converts into key=>value type array
      *
@@ -235,7 +242,11 @@ trait CommandTrait
         // This will greatly improve the performance of inserts
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         $tableName = $this->files[$name]['table'];
-        if (DB::table($tableName)->count() === 0 || $refresh) {
+        // If table is empty or we are refreshing, truncate it unless it was recently truncated!
+        if (!in_array($tableName,$this->truncatedTables) &&
+            (DB::table($tableName)->count() === 0 || $refresh)
+        ) {
+            $this->truncatedTables[] = $tableName;
             $this->line('<info>Database:</info> Truncating table ' . $tableName);
             DB::table($tableName)->truncate();
         }
