@@ -249,10 +249,7 @@ trait CommandTrait
             $this->truncatedTables[] = $tableName;
             $this->line('<info>Database:</info> Truncating table ' . $tableName);
             DB::table($tableName)->truncate();
-        } else if ($tableName !== 'geonames_geonames') {
-            return $this->line('<info>Database:</info> Table '.$tableName.' Already Seeded');
         }
-
         $buffer = array();
         // If it is a custom country code, use allCountries
         if (in_array($name, config('geonames.countries')))
@@ -432,23 +429,12 @@ trait CommandTrait
     /**
      * Download a file if it does not exist
      *
-     * @param string $country
      * @param Boolean $update Update files
      *
      */
-    protected function downloadAllFiles($country='all', $update = false)
+    protected function downloadAllFiles($update = false)
     {
-        if ($country !== 'all') {
-            unset($this->files['allCountries']);
-            $this->files[$country] = [
-                'url' => "http://download.geonames.org/export/dump/{$country}.zip",
-                'filename' => $country,
-                'table' => 'geonames_geonames'
-            ];
-        }
-
         $files = array_keys($this->getFilesArray());
-
         foreach ($files as $name) {
             $this->downloadFile($name, $update);
         }

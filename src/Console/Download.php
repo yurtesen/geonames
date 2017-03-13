@@ -34,7 +34,6 @@ class Download extends Command
      * @var string
      */
     protected $signature = 'geonames:download 
-                            {--country=all : Download just one country}
                             {--update : Updates the downloaded files to latest versions}
                            ';
 
@@ -53,8 +52,6 @@ class Download extends Command
     public function handle()
     {
         $update = $this->input->getOption('update');
-        $country = $this->input->getOption('country');
-
-        $this->downloadAllFiles($country, $update);
+        $this->downloadAllFiles($update);
     }
 }
