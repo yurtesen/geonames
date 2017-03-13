@@ -1,4 +1,9 @@
-# Symphony / Laravel / Eloquent Geonames
+# Symphony / Laravel / Lumen / Eloquent Geonames
+
+[![Total Downloads](https://poser.pugx.org/yurtesen/geonames/d/total.svg)](https://packagist.org/packages/yurtesen/geonames)
+[![Latest Stable Version](https://poser.pugx.org/yurtesen/geonames/v/stable.svg)](https://packagist.org/packages/yurtesen/geonames)
+[![Latest Unstable Version](https://poser.pugx.org/yurtesen/geonames/v/unstable.svg)](https://packagist.org/packages/yurtesen/geonames)
+[![License](https://poser.pugx.org/yurtesen/geonames/license.svg)](https://packagist.org/packages/yurtesen/geonames)
 
 This package provides probably the best Eloquent models, most complete SQL schemas and fastest Artisan commands to import/update a local copy of [GeoNames](http://www.geonames.org/) databases.
 
@@ -19,7 +24,10 @@ or install using command line :
 after installation, you will need to add the service provider in your config\app.php to 'providers' array
 
 	Yurtesen\Geonames\GeonamesServiceProvider::class,
-	
+
+or for lumen add service provider in bootstrap\app.php
+
+	$app->register(Yurtesen\Geonames\GeonamesServiceProvider::class);
 	
 ## Usage and Configuration
 
