@@ -51,12 +51,27 @@ class GeonamesServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes([
-            __DIR__ . '/database/migrations' => base_path('database/migrations')
-        ], 'migrations');
 
         $this->publishes([
-            __DIR__ . '/config/geonames.php' => base_path('config/geonames.php')
+            __DIR__ . '/database/migrations' => database_path('migrations')
+        ], 'migrations');
+
+        // Lumen is missing this helper function
+        if (!function_exists('config_path')) {
+            /**
+             * Get the configuration path.
+             *
+             * @param  string $path
+             * @return string
+             */
+            function config_path($path = '')
+            {
+                return app()->make('path.config') . ($path ? DIRECTORY_SEPARATOR . $path : $path);
+            }
+        }
+
+        $this->publishes([
+            __DIR__ . '/config/geonames.php' => config_path('geonames.php')
         ], 'config');
 
         $this->mergeConfigFrom(realpath(__DIR__ . '/config/geonames.php'), 'geonames');

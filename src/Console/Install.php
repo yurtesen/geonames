@@ -23,7 +23,6 @@
 namespace Yurtesen\Geonames\Console;
 
 use Illuminate\Console\Command;
-use League\Flysystem\MountManager;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 
@@ -44,9 +43,9 @@ class Install extends Command
     protected $description = 'Publish the migrations and config';
 
     /**
-     * files
+     * The filesystem instance.
      *
-     * @var Filesystem
+     * @var \Illuminate\Filesystem\Filesystem
      */
     protected $files;
 
@@ -54,12 +53,10 @@ class Install extends Command
      * Create a new Constructor instance.
      *
      * @param Filesystem $files
-     * @return void
      */
     public function __construct(Filesystem $files)
     {
         parent::__construct();
-
         $this->files = $files;
     }
 
@@ -82,26 +79,23 @@ class Install extends Command
             }
         }
 
-        $this->info("Instalation complete!");
+        $this->info("Installation complete!");
     }
 
     /**
      * Publish the file to the given path.
      *
-     * @param  string  $from
-     * @param  string  $to
+     * @param  string $from
+     * @param  string $to
      * @return void
      */
     protected function publishFile($from, $to)
     {
-        if ($this->files->exists($to) && ! $this->option('force')) {
-            return;
-        }
+        if (!$this->files->exists($to) || $this->option('force')) {
+            $this->createParentDirectory(dirname($to));
 
-        $dir = dirname($to);
-
-        if ($this->files->exists($dir)) {
             $this->files->copy($from, $to);
+
             $this->status($from, $to, 'File');
         }
     }
@@ -109,8 +103,8 @@ class Install extends Command
     /**
      * Publish the directory to the given directory.
      *
-     * @param  string  $from
-     * @param  string  $to
+     * @param  string $from
+     * @param  string $to
      * @return void
      */
     protected function publishDirectory($from, $to)
@@ -119,9 +113,8 @@ class Install extends Command
         $fromContents = $this->files->files($from);
 
         foreach ($fromContents as $file) {
-            $newFile = $to.DIRECTORY_SEPARATOR.$this->files->name($file).'.'.$this->files->extension($file);
-
-            if ($this->files->isFile($file) AND (! in_array($newFile, $toContents) OR $this->option('force'))) {
+            $newFile = $to . DIRECTORY_SEPARATOR . $this->files->name($file) . '.' . $this->files->extension($file);
+            if ($this->files->isFile($file) && (!in_array($newFile, $toContents) || $this->option('force'))) {
                 $this->files->copy($file, $newFile);
             }
         }
@@ -130,11 +123,24 @@ class Install extends Command
     }
 
     /**
+     * Create the directory to house the published files if needed.
+     *
+     * @param  string $directory
+     * @return void
+     */
+    protected function createParentDirectory($directory)
+    {
+        if (!$this->files->isDirectory($directory)) {
+            $this->files->makeDirectory($directory, 0755, true);
+        }
+    }
+
+    /**
      * Write a status message to the console.
      *
-     * @param  string  $from
-     * @param  string  $to
-     * @param  string  $type
+     * @param  string $from
+     * @param  string $to
+     * @param  string $type
      * @return void
      */
     protected function status($from, $to, $type)
@@ -143,6 +149,6 @@ class Install extends Command
 
         $to = str_replace(base_path(), '', realpath($to));
 
-        $this->line('<info>Copied '.$type.'</info> <comment>['.$from.']</comment> <info>To</info> <comment>['.$to.']</comment>');
+        $this->line('<info>Copied ' . $type . '</info> <comment>[' . $from . ']</comment> <info>To</info> <comment>[' . $to . ']</comment>');
     }
 }
