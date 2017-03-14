@@ -91,11 +91,14 @@ class Install extends Command
      */
     protected function publishFile($from, $to)
     {
-        if (!$this->files->exists($to) || $this->option('force')) {
-            $this->createParentDirectory(dirname($to));
+        if ($this->files->exists($to) && ! $this->option('force')) {
+            return;
+        }
 
+        $dir = dirname($to);
+
+        if ($this->files->exists($dir)) {
             $this->files->copy($from, $to);
-
             $this->status($from, $to, 'File');
         }
     }
@@ -120,19 +123,6 @@ class Install extends Command
         }
 
         $this->status($from, $to, 'Directory');
-    }
-
-    /**
-     * Create the directory to house the published files if needed.
-     *
-     * @param  string $directory
-     * @return void
-     */
-    protected function createParentDirectory($directory)
-    {
-        if (!$this->files->isDirectory($directory)) {
-            $this->files->makeDirectory($directory, 0755, true);
-        }
     }
 
     /**
