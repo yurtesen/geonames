@@ -27,7 +27,7 @@ after installation, you will need to add the service provider in your config\app
 
 	Yurtesen\Geonames\GeonamesServiceProvider::class,
 	
-or for Lumen add service provider in bootstrap\app.php
+or for Lumen add service provider in bootstrap\app.php Remember that [irazasyed/larasupport](https://github.com/irazasyed/larasupport) must be registered before.
     
 	$app->register(Yurtesen\Geonames\GeonamesServiceProvider::class);
 	
