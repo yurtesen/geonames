@@ -29,7 +29,7 @@ after installation, you will need to add the service provider in your config\app
 	
 or for Lumen add service provider in bootstrap\app.php
     
-    	$app->register(Yurtesen\Geonames\GeonamesServiceProvider::class);
+	$app->register(Yurtesen\Geonames\GeonamesServiceProvider::class);
 	
 ## Usage and Configuration
 
