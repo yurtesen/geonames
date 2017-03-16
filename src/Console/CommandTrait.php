@@ -479,6 +479,13 @@ trait CommandTrait
         if (!file_exists($storagePath)) {
             mkdir($storagePath, 0755, true);
         }
+
+        // Create .gitignore if it does not exist in $storagePath
+        if (!file_exists($storagePath.'/.gitignore')) {
+            $gitignore = "*\n!.gitignore\n";
+            file_put_contents($storagePath.'/.gitignore',$gitignore);
+        }
+
         // Open file and truncate it for writing (requires fopen_wrappers)
         $targetFile = $storagePath . '/' . $urlFileName;
         $targetFP = fopen($targetFile, 'w+');
