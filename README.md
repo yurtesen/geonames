@@ -1,5 +1,7 @@
 # Laravel / Lumen / Eloquent Geonames
 
+[![Latest Stable Version](https://poser.pugx.org/yurtesen/geonames/v/stable)](https://packagist.org/packages/yurtesen/geonames)
+[![Latest Unstable Version](https://poser.pugx.org/yurtesen/geonames/v/unstable)](https://packagist.org/packages/yurtesen/geonames)
 [![Monthly Downloads](https://poser.pugx.org/yurtesen/geonames/d/monthly)](https://packagist.org/packages/yurtesen/geonames)
 [![Total Downloads](https://poser.pugx.org/yurtesen/geonames/d/total.svg)](https://packagist.org/packages/yurtesen/geonames)
 [![Package for Laravel](https://img.shields.io/badge/Package%20for-Laravel/Lumen-blue.svg)](https://packagist.org/packages/yurtesen/geonames)
