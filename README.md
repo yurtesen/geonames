@@ -1,9 +1,9 @@
-[![Total Downloads](https://poser.pugx.org/yurtesen/geonames/d/total.svg)](https://packagist.org/packages/yurtesen/geonames)
-[![Latest Stable Version](https://poser.pugx.org/yurtesen/geonames/v/stable.svg)](https://packagist.org/packages/yurtesen/geonames)
-[![Latest Unstable Version](https://poser.pugx.org/yurtesen/geonames/v/unstable.svg)](https://packagist.org/packages/yurtesen/geonames)
-[![License](https://poser.pugx.org/yurtesen/geonames/license.svg)](https://packagist.org/packages/yurtesen/geonames)
-
 # Laravel / Lumen / Eloquent Geonames
+
+[![Monthly Downloads](https://poser.pugx.org/yurtesen/geonames/d/monthly)](https://packagist.org/packages/yurtesen/geonames)
+[![Total Downloads](https://poser.pugx.org/yurtesen/geonames/d/total.svg)](https://packagist.org/packages/yurtesen/geonames)
+[![Package for Laravel](https://img.shields.io/badge/Package%20for-Laravel/Lumen-blue.svg)](https://packagist.org/packages/yurtesen/geonames)
+[![License](https://poser.pugx.org/yurtesen/geonames/license.svg)](https://packagist.org/packages/yurtesen/geonames)
 
 This package provides probably the best Eloquent models, most complete SQL schemas and fastest Artisan commands to import/update a local copy of [GeoNames](http://www.geonames.org/) databases.
 
