@@ -42,12 +42,12 @@ class CreateGeonamesGeonamesTable extends Migration
             $table->char('feature_class', 1)->nullable();
             $table->string('feature_code', 10)->nullable();
             $table->char('country_code', 2);
-            $table->string('cc2', 60)->nullable();
+            $table->string('cc2', 200)->nullable();
             $table->string('admin1_code', 20)->nullable();
             $table->string('admin2_code', 80)->nullable();
             $table->string('admin3_code', 20)->nullable();
             $table->string('admin4_code', 20)->nullable();
-            $table->integer('population')->unsigned()->nullable();
+            $table->bigInteger('population')->unsigned()->nullable();
             $table->integer('elevation')->nullable();
             $table->integer('dem')->nullable();
             $table->string('timezone_id', 40)->index()->nullable();
