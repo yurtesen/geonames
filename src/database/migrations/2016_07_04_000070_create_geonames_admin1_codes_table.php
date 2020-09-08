@@ -34,8 +34,8 @@ class CreateGeonamesAdmin1CodesTable extends Migration
     {
         Schema::create('geonames_admin1_codes', function (Blueprint $table) {
             $table->string('code',20)->unique();
-            $table->string('name',100)->unique();
-            $table->string('name_ascii',100)->unique();
+            $table->string('name',100);
+            $table->string('name_ascii',100);
             $table->integer('geoname_id')->primary()->unsigned();
             $table->foreign('geoname_id')->references('geoname_id')->on('geonames_geonames')->onUpdate('cascade')->onDelete('cascade');
         });
